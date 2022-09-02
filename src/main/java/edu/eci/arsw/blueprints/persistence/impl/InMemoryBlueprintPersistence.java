@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
-    private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
+    public final static Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
 
     public InMemoryBlueprintPersistence() {
         //load stub data

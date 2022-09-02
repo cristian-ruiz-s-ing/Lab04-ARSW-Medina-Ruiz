@@ -9,6 +9,7 @@ import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
+import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
 import edu.eci.arsw.blueprints.persistence.impl.Tuple;
 
 import java.util.HashMap;
@@ -25,8 +26,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BlueprintsServices {
-
-    private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
    
     @Autowired
     BlueprintsPersistence bpp=null;
@@ -47,7 +46,7 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
     public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-        return blueprints.get(new Tuple<>(author, name));
+        return InMemoryBlueprintPersistence.blueprints.get(new Tuple<>(author, name));
     }
     
     /**
@@ -58,10 +57,10 @@ public class BlueprintsServices {
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
         Set<Blueprint> lista = new HashSet<Blueprint>();
-        for(Map.Entry<Tuple<String, String>,Blueprint> entry : blueprints.entrySet()){
+        for(Map.Entry<Tuple<String, String>,Blueprint> entry : InMemoryBlueprintPersistence.blueprints.entrySet()){
             if(entry.getKey().getElem1() == author){
                 String name = entry.getKey().getElem2();
-                lista.add(blueprints.get(new Tuple<>(author, name)));
+                lista.add(InMemoryBlueprintPersistence.blueprints.get(new Tuple<>(author, name)));
             }
 
         }
