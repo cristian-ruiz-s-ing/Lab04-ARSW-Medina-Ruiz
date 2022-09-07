@@ -13,13 +13,14 @@ public class Main {
         BlueprintsServices bps = ac.getBean(BlueprintsServices.class);
 
         Point[] pts = new Point[]{new Point(2,2),new Point(31,31)};
-        Blueprint bp = new Blueprint("Deivid", "PruebaUno", pts);
         Point[] pts2 = new Point[]{new Point(5,5),new Point(3,3)};
-        Blueprint bp2 = new Blueprint("Cristian", "PruebaDos", pts2);
-        Point[] pts3 = new Point[]{new Point(25,55),new Point(31,37)};
-        Blueprint bp3 = new Blueprint("Cristian", "PruebaTres", pts2);
+        Point[] pts3 = new Point[]{new Point(5,5),new Point(3,3)};
         Point[] pts4 = new Point[]{new Point(65,23),new Point(67,98)};
-        Blueprint bp4 = new Blueprint("Pepito", "PruebaCuatro", pts2);
+
+        Blueprint bp = new Blueprint("Deivid", "PruebaUno", pts);
+        Blueprint bp2 = new Blueprint("Cristian", "PruebaDos", pts2);
+        Blueprint bp3 = new Blueprint("Cristian", "PruebaTres", pts3);
+        Blueprint bp4 = new Blueprint("Pepito", "PruebaCuatro", pts4);
 
         bps.addNewBlueprint(bp);
         bps.addNewBlueprint(bp2);
