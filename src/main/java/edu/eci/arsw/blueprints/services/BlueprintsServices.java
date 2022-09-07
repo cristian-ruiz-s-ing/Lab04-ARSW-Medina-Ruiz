@@ -8,6 +8,7 @@ package edu.eci.arsw.blueprints.services;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
 import edu.eci.arsw.blueprints.persistence.impl.Tuple;
@@ -18,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,16 +30,13 @@ import org.springframework.stereotype.Service;
 public class BlueprintsServices {
    
     @Autowired
+    @Qualifier("serviceInMemoryBlueprintPersistence")
     BlueprintsPersistence bpp=null;
     
-    public void addNewBlueprint(Blueprint bp){
-        
+    public void addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException {
+        bpp.saveBlueprint(bp);
     }
-    
-    public Set<Blueprint> getAllBlueprints(){
-        return null;
-    }
-    
+
     /**
      * 
      * @param author blueprint's author
@@ -46,7 +45,8 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
     public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-        return InMemoryBlueprintPersistence.blueprints.get(new Tuple<>(author, name));
+        return bpp.getBlueprint(author, name);
+        //return InMemoryBlueprintPersistence.blueprints.get(new Tuple<>(author, name));
     }
     
     /**
@@ -56,16 +56,25 @@ public class BlueprintsServices {
      * @throws BlueprintNotFoundException if the given author doesn't exist
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
-        Set<Blueprint> lista = new HashSet<Blueprint>();
-        for(Map.Entry<Tuple<String, String>,Blueprint> entry : InMemoryBlueprintPersistence.blueprints.entrySet()){
-            if(entry.getKey().getElem1() == author){
-                String name = entry.getKey().getElem2();
-                lista.add(InMemoryBlueprintPersistence.blueprints.get(new Tuple<>(author, name)));
-            }
-
-        }
-        return lista;
+        return bpp.getBlueprintsByAuthor(author);
+//        Set<Blueprint> lista = new HashSet<Blueprint>();
+//        for(Map.Entry<Tuple<String, String>,Blueprint> entry : InMemoryBlueprintPersistence.blueprints.entrySet()){
+//            if(entry.getKey().getElem1() == author){
+//                String name = entry.getKey().getElem2();
+//                lista.add(InMemoryBlueprintPersistence.blueprints.get(new Tuple<>(author, name)));
+//            }
+//
+//        }
+//        return lista;
         
     }
-    
+
+    /**
+     * Método que me retorna todos los BluePrints que hay actualmente.
+     * @return Set(Blueprint) - El cual contiene toda la información de los BluePrint
+     * @throws BlueprintNotFoundException
+     */
+    public Set<Blueprint> getAllBlueprints(){
+        return bpp.getAllBlueprints();
+    }
 }
