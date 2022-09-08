@@ -5,19 +5,14 @@
  */
 package edu.eci.arsw.blueprints.services;
 
+import edu.eci.arsw.blueprints.filtros.BluePrintFilter;
 import edu.eci.arsw.blueprints.model.Blueprint;
-import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
-import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
-import edu.eci.arsw.blueprints.persistence.impl.Tuple;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -32,7 +27,34 @@ public class BlueprintsServices {
     @Autowired
     @Qualifier("serviceInMemoryBlueprintPersistence")
     BlueprintsPersistence bpp=null;
-    
+
+    @Autowired
+    @Qualifier("serviceInMemoryBlueprintPersistenceFilter")
+    BluePrintFilter bppF=null;
+
+    /**
+     * Clase que me permite recorrer la lista de BluePrint y aplicar FiltroA
+     * @param blueprints ArrayList<BluePrint>
+     * @return ArrayList<Blueprint>, La nueva BluePrint con los puntos filtrados.
+     */
+    public ArrayList<Blueprint> blueprintFiltreA(ArrayList<Blueprint> blueprints){
+        return bppF.filtrarPuntosA(blueprints);
+    }
+
+    /**
+     * Clase que me permite recorrer la lista de BluePrint y aplicar FiltroB
+     * @param blueprints ArrayList<BluePrint>
+     * @return ArrayList<Blueprint>, La nueva BluePrint con los puntos filtrados.
+     */
+    public ArrayList<Blueprint> blueprintFiltreB(ArrayList<Blueprint> blueprints){
+        return bppF.filtrarPuntosB(blueprints);
+    }
+
+    /**
+     * Método que me permite agregar un nuevo BluePrint.
+     * @param bp
+     * @throws BlueprintPersistenceException
+     */
     public void addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException {
         bpp.saveBlueprint(bp);
     }

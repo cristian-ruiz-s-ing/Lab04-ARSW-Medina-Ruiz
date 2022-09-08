@@ -40,10 +40,14 @@ public class Blueprint {
     public List<Point> getPoints() {
         return points;
     }
+
+    public void setPoints(List<Point> points){this.points = points;}
     
     public void addPoint(Point p){
         this.points.add(p);
     }
+
+    public void removePoint(int i){this.points.remove(i);}
 
     @Override
     public String toString() {
