@@ -13,7 +13,6 @@ public class Main {
     public static void main(String arg[]) throws BlueprintPersistenceException, BlueprintNotFoundException {
         ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
         BlueprintsServices bps = ac.getBean(BlueprintsServices.class);
-        ArrayList<Blueprint> bpsA = new ArrayList<>();
 
         Point[] pts = new Point[]{new Point(2,2),new Point(31,31)};
         Point[] pts2 = new Point[]{new Point(5,5),new Point(3,3)};
@@ -33,5 +32,6 @@ public class Main {
         System.out.println(bps.getAllBlueprints());
         System.out.println(bps.getBlueprint("Deivid","PruebaUno"));
         System.out.println(bps.getBlueprintsByAuthor("Cristian"));
+
     }
 }

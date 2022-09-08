@@ -54,15 +54,12 @@ public class InMemoryBlueprintPersistenceFilter implements BluePrintFilter {
         int cont = listaActual.size();
         boolean bandera = true;
         for (int i = 0; i < cont; i += 2){
-            System.out.println("I:" + i);
             if(i == cont-1 || bandera){
-                System.out.println("Entro parte Uno");
                 Point puntoActual = listaActual.get(i);
                 listaFiltrada.add(puntoActual);
                 bandera = false;
             }
             else {
-                System.out.println("Entro parte Dos");
                 Point puntoSiguiente = listaActual.get(i+1);
                 listaFiltrada.add(puntoSiguiente);
                 bandera = true;
